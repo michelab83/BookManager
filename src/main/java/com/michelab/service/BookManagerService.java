@@ -198,7 +198,7 @@ public class BookManagerService {
         if (optionalUserBook.isPresent()) {
             return mapper.toDto(optionalUserBook.get());
         } else {
-            return new BookStatusResponseDto("ERROR", "Book not found");
+            return new BookStatusResponseDto("ERROR", "Book has never been borrowed");
         }
 
     }

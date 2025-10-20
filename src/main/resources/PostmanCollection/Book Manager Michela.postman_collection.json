@@ -1,0 +1,198 @@
+{
+	"info": {
+		"_postman_id": "0837479a-9e9e-404a-8ec2-7f18345704de",
+		"name": "Book Manager Michela",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "35072284"
+	},
+	"item": [
+		{
+			"name": "Transaction History",
+			"item": [
+				{
+					"name": "Get Book Transaction History",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:9002/api/books/5b2eba7c-3c78-43e3-840e-1de4a6421827/transactions"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book Transaction History",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:9002/api/users/46/transactions"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Add Books",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n{\n    \"title\": \"Chicken\",\n    \"author\": \"John Green\",\n    \"isbn\": \"2222333344456\",\n    \"publicationYear\" : \"2000\"\n},\n{\n    \"title\": \"Rooster\",\n    \"author\": \"Jack Black\",\n    \"isbn\": \"1231231211239\",\n    \"publicationYear\" : \"1999\"\n}\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9002/api/books"
+			},
+			"response": []
+		},
+		{
+			"name": "Borrow Book",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"bookId\" : \"be2f73f2-ff1a-4324-b330-0ca388a1e834\",\n    \"userId\" : 46\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9002/api/books/borrow"
+			},
+			"response": []
+		},
+		{
+			"name": "Return Book",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"bookId\" : \"be2f73f2-ff1a-4324-b330-0ca388a1e834\",\n    \"userId\" : 46\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9002/api/books/return"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Books",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9002/api/users/46/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"api",
+						"users",
+						"46",
+						"books"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "RETURNED",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Books",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9002/api/books/search?author=Jack",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9002",
+					"path": [
+						"api",
+						"books",
+						"search"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "author",
+							"value": "Jack"
+						},
+						{
+							"key": "isbn",
+							"value": "1231231231231",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Book Details",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9002/api/books/e08fc13c-4672-44db-9876-5ee7f57abbf3"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Book Status",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9002/api/books/5b2eba7c-3c78-43e3-840e-1de4a6421827/status"
+			},
+			"response": []
+		}
+	]
+}
