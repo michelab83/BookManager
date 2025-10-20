@@ -41,8 +41,8 @@ class UsersControllerIntegrationTest {
         BookResponseDto book = new BookResponseDto(
             UUID.randomUUID(),
             "9783161484100",
-            "Effective Java",
-            "Joshua Bloch",
+            "Michelas Book",
+            "Mik Bianco",
             false,
             "2018",
             LocalDateTime.of(2021, 1, 1, 12, 0),
@@ -58,8 +58,8 @@ class UsersControllerIntegrationTest {
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.books[0].isbn").value("978-3-16-148410-0"))
-            .andExpect(jsonPath("$.books[0].title").value("Effective Java"))
-            .andExpect(jsonPath("$.books[0].author").value("Joshua Bloch"))
+            .andExpect(jsonPath("$.books[0].title").value("Michelas Book"))
+            .andExpect(jsonPath("$.books[0].author").value("Mik Bianco"))
             .andExpect(jsonPath("$.books[0].borrowed").value(false))
             .andExpect(jsonPath("$.books[0].publicationYear").value("2018"));
     }
@@ -71,8 +71,8 @@ class UsersControllerIntegrationTest {
         BookResponseDto borrowedBook = new BookResponseDto(
             UUID.randomUUID(),
             "978-0-13-468599-1",
-            "Clean Architecture",
-            "Robert C. Martin",
+            "Everything is fine",
+            "Jack Black",
             true,
             "2017",
             LocalDateTime.of(2022, 1, 1, 10, 0),
@@ -88,7 +88,7 @@ class UsersControllerIntegrationTest {
                 .param("status", "BORROWED")
                 .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.books[0].title").value("Clean Architecture"))
+            .andExpect(jsonPath("$.books[0].title").value("Everything is fine"))
             .andExpect(jsonPath("$.books[0].borrowed").value(true))
             .andExpect(jsonPath("$.books[0].publicationYear").value("2017"));
     }
