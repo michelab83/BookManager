@@ -34,7 +34,7 @@ public class BookManagerService {
 
     Logger logger = LoggerFactory.getLogger(BookManagerService.class);
 
-    public static int ALLOWED_LOANS = 3;
+    public static long ALLOWED_LOANS = 3;
 
     private final BookRepository bookRepository;
 
@@ -111,7 +111,6 @@ public class BookManagerService {
         Optional<BookEntity> bookEntityOptional = bookRepository.findById(bookTransactionRequestDto.getBookId());
 
         if (bookEntityOptional.isEmpty()) {
-            logger.error("Book not found");
             return new BookResponseDto("ERROR", "Book not found");
         }
         BookEntity bookEntity = bookEntityOptional.get();
@@ -143,6 +142,7 @@ public class BookManagerService {
     private void borrowBook(BookEntity book, Long userId) {
 
         if (book.isBorrowed()) {
+            String.format("User %d has not borrowed book %s.", userId, book.getBookId());
             logger.error("Book has been borrowed");
             throw new BookBorrowedException("Book has been borrowed");
         }
@@ -165,22 +165,23 @@ public class BookManagerService {
         if (userBooks.stream().anyMatch(ub -> ub.getBook().equals(book))) {
             Optional<UserBookEntity> optionalUserBook = userBooks.stream().filter(ub -> ub.getBook().equals(book)).findFirst();
             optionalUserBook.ifPresent(
-                userBookEntity -> userBookEntity.setReturnedDate(LocalDateTime.now())
+                userBookEntity -> {
+                    userBookEntity.setReturnedDate(LocalDateTime.now());
+
+                }
+
             );
 
         } else {
-            throw new NotBorrowedException("User has not borrowed this book.");
-        }
+            String message = String.format("User %d has not borrowed book %s.", userId, book.getBookId());
+            logger.error(message);
+            throw new NotBorrowedException(message);        }
 
     }
 
 
-    private int userCurrentBooks(Long userId) {
-        var books = userBookRepository.findByUserIdAndReturnedDateIsNullOrderByBorrowedDateDesc(userId);
-        books.forEach(bookEntity -> {
-            logger.info(bookEntity.toString());
-        });
-        return books.size();
+   private long userCurrentBooks(Long userId) {
+        return userBookRepository.countByUserIdAndReturnedDateIsNull(userId);
     }
 
     public BooksResponseDto searchBooks(String title, String author, String isbn) {

@@ -13,6 +13,7 @@ import java.util.UUID;
 public interface UserBookRepository  extends JpaRepository<UserBookEntity, UUID> {
 
     List<UserBookEntity> findByUserIdAndReturnedDateIsNullOrderByBorrowedDateDesc(Long userId);
+    long countByUserIdAndReturnedDateIsNull(Long userId);
     List<UserBookEntity> findByUserIdAndReturnedDateIsNotNullOrderByReturnedDateDesc(Long userId);
     List<UserBookEntity> findByUserId(Long userId);
 
